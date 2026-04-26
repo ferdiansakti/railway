@@ -1,10 +1,12 @@
-FROM tensorflow/serving:latest
+FROM tensorflow/serving
 
-# copy model ke container
 COPY model /models/cc-model
 
-# set model name
 ENV MODEL_NAME=cc-model
 
-# expose port
-EXPOSE 8501
+ENV PORT=8080
+
+CMD tensorflow_model_server \
+  --rest_api_port=$PORT \
+  --model_name=cc-model \
+  --model_base_path=/models/cc-model
