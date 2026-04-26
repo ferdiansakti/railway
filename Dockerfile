@@ -1,16 +1,16 @@
-FROM tensorflow/serving
+FROM tensorflow/serving:2.13.0
 
-# copy model (FIX PATH)
+# copy model
 COPY model/cc-model /models/cc-model
 
-# set nama model
+# env
 ENV MODEL_NAME=cc-model
 
-# Railway
+# 🔥 Railway port
 ENV PORT=8080
 
-# run TF Serving
-CMD tensorflow_model_server \
-  --rest_api_port=$PORT \
-  --model_name=cc-model \
-  --model_base_path=/models/cc-model
+# 🔥 FIX: gunakan JSON array (bukan shell form)
+CMD ["tensorflow_model_server",
+     "--rest_api_port=8080",
+     "--model_name=cc-model",
+     "--model_base_path=/models/cc-model"]
